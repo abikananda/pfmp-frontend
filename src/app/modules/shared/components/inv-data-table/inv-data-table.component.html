@@ -1,0 +1,89 @@
+<form>
+    <div class="mb-3 d-flex flex-nowrap justify-content-between align-items-center" style="white-space: nowrap;">
+        <div class="d-flex align-items-center flex-grow-1 me-3">
+            <label for="table-complete-search" class="me-2 col-form-label">Search:</label>
+            <input id="table-complete-search" type="text" class="form-control me-2 w-auto" 
+                name="searchTerm" placeholder="Search" [(ngModel)]="service.searchTerm" style="min-width: 200px;" />
+            <span *ngIf="service.loading$ | async" class="col-form-label">Loading...</span>
+        </div>
+    
+        <div class="d-flex align-items-center flex-nowrap">
+            <div class="form-check form-switch mb-3">
+                <input class="form-check-input"
+                       type="checkbox"
+                       id="statusToggle"
+                       name="statusToggle"
+                       [(ngModel)]="showOnlyActive"
+                       (change)="filterItems()" />
+                <label class="form-check-label" for="statusToggle">
+                  Show Only Active
+                </label>
+              </div>
+              
+        </div>
+    </div>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col" class="fixed-col" appSortable [column]="'particular'" (sort)="onSort($event)">Particulars</th>
+                <th scope="col" appSortable [column]="'invAmount'" (sort)="onSort($event)">Invested Amount</th>
+                <!-- <th scope="col" appSortable="marketValue" (sort)="onSort($event)">Market Value</th> -->
+                <th scope="col" appSortable [column]="'invReturnPer'" (sort)="onSort($event)">Return Percent</th>
+                <th scope="col" appSortable [column]="'excessReturn'" (sort)="onSort($event)">Return Amount</th>
+                <th scope="col" appSortable [column]="'investmentStatus'" (sort)="onSort($event)">Investment Status</th>
+                <th scope="col" appSortable [column]="'loanStatus'" (sort)="onSort($event)" [hidden]="hideColumn()">Loan Status</th>
+                <th scope="col" appSortable [column]="'investmentDate'" (sort)="onSort($event)" [hidden]="hideColumn()">Investment
+                    Date</th>
+                <th scope="col" appSortable [column]="'lastEMIPaidOn'" (sort)="onSort($event)" [hidden]="hideColumn()">Last EMI Date</th>
+                <th scope="col" appSortable [column]="'amtCreditInBankAccount'" (sort)="onSort($event)" [hidden]="hideColumn()">Credit
+                    In Bank</th>
+                <th scope="col" appSortable [column]="'tenure'" (sort)="onSort($event)" [hidden]="hideColumn()">Tenure</th>
+                <th scope="col" appSortable [column]="'tenure'" (sort)="onSort($event)" [hidden]="hideColumn()">NPA</th>
+                <th scope="col" appSortable [column]="'comments'" (sort)="onSort($event)">comments</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (country of countries$ | async; track country.id) {
+            <tr>
+                <th scope="row">{{ country.id }}</th>
+                <td class="fixed-col"><ngb-highlight [result]="country.particular" [term]="service.searchTerm" /></td>
+                <td><ngb-highlight [result]="country.invAmount | currency: 'INR':'symbol':'1.1-2':'hi-IN'" [term]="service.searchTerm" />
+                </td>
+                <!-- <td><ngb-highlight [result]="country.marketValue | currency: 'INR':'symbol':'1.1-2':'hi-IN'" [term]="service.searchTerm" /></td> -->
+                <!-- divide by 100 because percent pipe multiply value with 100 by default -->
+                <td><ngb-highlight [result]="country.invReturnPer/100 | percent: '1.1-2'" [term]="service.searchTerm" />
+                </td>
+                <td><ngb-highlight [result]="country.excessReturn | currency: 'INR':'symbol':'1.1-2':'hi-IN'" [term]="service.searchTerm" /></td>
+                <td><ngb-highlight [result]="country.investmentStatus" [term]="service.searchTerm" /></td>
+                <td><ngb-highlight [result]="country.loanStatus" [term]="service.searchTerm" /></td>
+                <td><ngb-highlight [result]="country.investmentDate" [term]="service.searchTerm" /></td>
+                <td><ngb-highlight [result]="country.lastEMIPaidOn" [term]="service.searchTerm" /></td>
+                <td><ngb-highlight [result]="country.amtCreditInBankAccount | currency: 'INR':'symbol':'1.1-2':'hi-IN'"
+                        [term]="service.searchTerm" /></td>
+                <td><ngb-highlight [result]="country.tenure | number" [term]="service.searchTerm" /></td>
+                <td><ngb-highlight [result]="country.npa" [term]="service.searchTerm" /></td>
+                <td><ngb-highlight [result]="country.comments" [term]="service.searchTerm" style="font-size: 10px;line-height: 0.1px;"/></td>
+            </tr>
+            } @empty {
+            <tr>
+                <td colspan="6" style="text-align: center">No countries found</td>
+            </tr>
+            }
+        </tbody>
+    </table>
+
+    <div class="d-flex justify-content-between p-2">
+        <ngb-pagination [collectionSize]="(total$ | async)!" [(page)]="service.page" [pageSize]="service.pageSize"
+            aria-label="Pagination" size="md" [boundaryLinks]="true" [maxSize]="20">
+        </ngb-pagination>
+
+        <select class="form-select" style="width: auto" name="pageSize" [(ngModel)]="service.pageSize">
+            <option [ngValue]="10">10</option>
+            <option [ngValue]="20">20</option>
+            <option [ngValue]="50">50</option>
+            <option [ngValue]="100">100</option>
+        </select>
+    </div>
+</form>

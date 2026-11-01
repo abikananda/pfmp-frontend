@@ -1,0 +1,94 @@
+<div class="row">
+  <div class="col-sm-12">
+    <app-card cardTitle="Select Investment Type" [options]="false">
+      <div class="mb-3">
+        <select class="form-select" [(ngModel)]="selectedInvType" (ngModelChange)="onSelectionChange($event)">
+          <option [value]="undefined">Choose Investment Type</option>
+          <option *ngFor="let option of invOptions" [value]="option.value">{{ option.text }}</option>
+        </select>
+      </div>
+    </app-card>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-12">
+    <app-card cardTitle="Fixed Investments" [options]="false">
+      <app-fixed-inv-data-table [invType]="selectedInvType"></app-fixed-inv-data-table>
+    </app-card>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-6">
+    <div class="row">
+      <div class="col-md-6">
+        <app-card [hidHeader]="true" cardClass="bg-c-blue order-card">
+          <h6 class="text-white">Portfolio Return</h6>
+          <h2 class="text-end text-white">
+            <i class="icon-profit float-start"></i>
+            <span>{{data.realisedReturnPer/100 | percent: '1.1-2'}}</span>
+          </h2>
+          <p class="m-b-0">
+            Return Amount
+            <span class="float-end">{{data.totalFundInvested * data.realisedReturnPer/100 | currency: 'INR':'symbol':'1.0-0':'hi-IN'}}</span>
+          </p>
+        </app-card>
+      </div>
+      <div class="col-md-6">
+        <app-card [hidHeader]="true" cardClass="bg-c-green order-card">
+          <h6 class="text-white">Total Fund Invested</h6>
+          <h2 class="text-end text-white">
+            <i class="icon-investment float-start"></i>
+            <span>{{data.totalFundInvested | currency: 'INR':'symbol':'1.0-0':'hi-IN'}}</span>
+          </h2>
+          <p class="m-b-0">
+            Round
+            <span class="float-end">{{ formatToLakhOrCrore(data.totalFundInvested) }}</span>
+          </p>
+        </app-card>
+      </div>
+    </div>
+    <div class="row">
+      <app-card cardTitle="Notes" [options]="false">
+        <ul>
+          <li>My manual lending Investment starts on 26th Jan 2024</li>
+          <li>Mom's manual lending account- 6th Jan 2025</li>
+        </ul>
+      </app-card>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <app-card cardTitle="Investment Allocation" [options]="false">
+      <ngx-charts-bar-vertical-2d
+        [view]="[500, 400]"
+        [scheme]="colorScheme"
+        [results]="chatData"
+        [gradient]="false"
+        [xAxis]="true"
+        [yAxis]="true"
+        [legend]="true"
+        [showXAxisLabel]="true"
+        [showYAxisLabel]="true"
+        [xAxisLabel]="'Investment Type'"
+        [yAxisLabel]="'Percentage'"
+        [barPadding]="5"
+        [groupPadding]="30">
+      </ngx-charts-bar-vertical-2d>
+  </app-card>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <app-card cardTitle="Strategy to increase return" [options]="false">
+      <ul>
+        <li>Do FD/RD on my SFB and other Small finance account in stable money</li>
+        <li>Increase the return to 25% in both stock investing account</li>
+        <li>Do not invest in my dhan account(close after some days of withdraw), instead invest in mom's dhan account to save tax</li>
+        <li>Do not invest much in 12% club as it is risky compare to other</li>
+        <li>Do not invest in CRED as it is giving low interest rate</li>
+        <li>Plan a lump sum MF portfolio of 5L to invest and increase 5L every year</li>
+        <li>Invest in Bonds after research</li>
+        <li>Invest in Mom's Lendenclub account to get more interest and tax saving</li>
+      </ul>
+    </app-card>
+  </div>
+</div>

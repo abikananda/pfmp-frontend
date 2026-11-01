@@ -1,0 +1,39 @@
+<ul class="navbar-nav ms-auto">
+  <li>{{fullname}}</li>
+
+  <li>
+    <div class="dropdown drp-user" ngbDropdown placement="auto">
+      <a href="javascript:" ngbDropdownToggle>
+        <app-avatar fullName="{{fullname}}"></app-avatar>
+      </a>
+      <div class="dropdown-menu dropdown-menu-end profile-notification" ngbDropdownMenu>
+        <div class="pro-head">
+          <div class="d-flex align-items-center gap-2">
+            <app-avatar fullName="{{fullname}}"></app-avatar>
+            <span>{{username}}</span>
+          </div>
+        </div>
+        <ul class="pro-body">
+          <li>
+            <a href="javascript:" class="dropdown-item" routerLink="/app/profile/me">
+              <i class="feather icon-user"></i>
+              Profile
+            </a>
+          </li>
+          <li>
+            <a href="javascript:" class="dropdown-item">
+              <i class="feather icon-mail"></i>
+              My Messages
+            </a>
+          </li>
+          <li>
+            <a href="javascript:" class="dropdown-item" (click)="logout()">
+              <i class="feather icon-lock"></i>
+              Logout
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </li>
+</ul>

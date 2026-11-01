@@ -1,0 +1,249 @@
+<div class="row">
+  <div class="col-sm-12">
+    <app-card cardTitle="Upload ManualLending Report" [options]="false">
+      <app-file-upload [fileType]="'ManualLending'"></app-file-upload>
+    </app-card>
+  </div>
+  <!-- <div class="col-sm-12">
+    <app-card cardTitle="Upload DhanStocks Report" [options]="false">
+      <app-file-upload [fileType]="'DhanStocks'"></app-file-upload>
+    </app-card>
+  </div> -->
+
+  <div class="col-sm-12">
+    <app-card cardTitle="Add Amount To Wallet(use this for P2P)" [options]="false">
+      <form name="form1" (ngSubmit)="f1.form.valid && addAmtToWallet()" #f1="ngForm" novalidate>
+        <div class="row">
+          <div class="col-md-4 mb-3">
+            <label for="amount1" class="form-label">Amount</label>
+            <input type="text" class="form-control" id="amount1" name="amount1" placeholder="Amount"
+              [(ngModel)]="form1['amount1']" #amount1="ngModel" required />
+            <div *ngIf="f1.submitted && amount1.invalid" class="text-danger txt-validation">
+              <div *ngIf="amount1.errors?.['required']">Amount is required</div>
+            </div>
+          </div>
+          <div class="col-md-4 mb-3">
+            <label for="walletType1" class="form-label">Wallet Type</label>
+            <select class="form-control form-select" id="walletType1" name="walletType1" placeholder="Wallet Type"
+              [(ngModel)]="form1['walletType1']" #walletType1="ngModel" required>
+              <option value="MOM_DHAN_ACCOUNT" selected>STOCKS</option>
+              <option value="MANUAL_LENDING">MANUAL_LENDING</option>
+            </select>
+            <div *ngIf="f1.submitted && walletType1.invalid" class="text-danger txt-validation">
+              <div *ngIf="walletType1.errors?.['required']">Wallet Type is required</div>
+            </div>
+          </div>
+        </div>
+        <button class="btn btn-primary">Submit</button>
+        <div *ngIf="f1.submitted && reqSubmited1" class="alert alert-danger text-danger">
+          {{errorMessage}}
+        </div>
+      </form>
+    </app-card>
+  </div>
+  <div class="col-sm-12">
+    <app-card cardTitle="Update Actual Wallet Balance" [options]="false">
+      <form name="form2" (ngSubmit)="f2.form.valid && updateActualWalletBalance()" #f2="ngForm" novalidate>
+        <div class="row">
+          <div class="col-md-4 mb-3">
+            <label for="amount2" class="form-label">Amount</label>
+            <input type="text" class="form-control" id="amount2" name="amount2" placeholder="Amount"
+              [(ngModel)]="form2['amount2']" #amount2="ngModel" required />
+            <div *ngIf="f2.submitted && amount2.invalid" class="text-danger txt-validation">
+              <div *ngIf="amount2.errors?.['required']">Amount is required</div>
+            </div>
+          </div>
+          <div class="col-md-4 mb-3">
+            <label for="walletType2" class="form-label">Wallet Type</label>
+            <select class="form-control form-select" id="walletType2" name="walletType2" placeholder="Wallet Type"
+              [(ngModel)]="form2['walletType2']" #walletType2="ngModel" required>
+              <option value="MOM_DHAN_ACCOUNT">STOCKS</option>
+              <!-- <option value="MANUAL_LENDING">MANUAL_LENDING</option> -->
+            </select>
+            <div *ngIf="f2.submitted && walletType2.invalid" class="text-danger txt-validation">
+              <div *ngIf="walletType2.errors?.['required']">Wallet Type is required</div>
+            </div>
+          </div>
+        </div>
+        <button class="btn btn-primary">Submit</button>
+        <div *ngIf="f2.submitted && reqSubmited2" class="alert alert-danger text-danger">
+          {{errorMessage}}
+        </div>
+      </form>
+    </app-card>
+  </div>
+  <div class="col-sm-12">
+    <app-card cardTitle="Transfer Amount To Bank" [options]="false">
+      <form name="form3" (ngSubmit)="f3.form.valid && transferAmtToBank()" #f3="ngForm" novalidate>
+        <div class="row">
+          <div class="col-md-4 mb-3">
+            <label for="amount3" class="form-label">Amount</label>
+            <input type="text" class="form-control" id="amount3" name="amount3" placeholder="Amount"
+              [(ngModel)]="form3['amount3']" #amount3="ngModel" required />
+            <div *ngIf="f3.submitted && amount3.invalid" class="text-danger txt-validation">
+              <div *ngIf="amount3.errors?.['required']">Amount is required</div>
+            </div>
+          </div>
+          <div class="col-md-4 mb-3">
+            <label for="walletType3" class="form-label">Wallet Type</label>
+            <select class="form-control form-select" id="walletType3" name="walletType3" placeholder="Wallet Type"
+              [(ngModel)]="form3['walletType3']" #walletType3="ngModel" required>
+              <option value="MOM_DHAN_ACCOUNT">STOCKS</option>
+              <!-- <option value="MANUAL_LENDING">MANUAL_LENDING</option> -->
+            </select>
+            <div *ngIf="f3.submitted && walletType3.invalid" class="text-danger txt-validation">
+              <div *ngIf="walletType3.errors?.['required']">Wallet Type is required</div>
+            </div>
+          </div>
+        </div>
+        <button class="btn btn-primary">Submit</button>
+        <div *ngIf="f3.submitted && reqSubmited3" class="alert alert-danger text-danger">
+          {{errorMessage}}
+        </div>
+      </form>
+    </app-card>
+  </div>
+  <div class="col-sm-12">
+    <app-card cardTitle="Add New Investment" [options]="false">
+      <form name="form4" (ngSubmit)="f4.form.valid && addInvestment()" #f4="ngForm" novalidate>
+        <div class="row">
+          <div class="col-md-4 mb-3">
+            <label for="particulars" class="form-label">Particulars</label>
+            <input type="text" class="form-control" id="particulars" name="particulars" placeholder="Particulars"
+              [(ngModel)]="form4['particulars']" #particulars="ngModel" required />
+            <div *ngIf="f4.submitted && particulars.invalid" class="text-danger txt-validation">
+              <div *ngIf="particulars.errors?.['required']">Particulars is required</div>
+            </div>
+          </div>
+          <div class="col-md-4 mb-3">
+            <label for="amount4" class="form-label">Investment Amount</label>
+            <input type="text" class="form-control" id="amount4" name="amount4" placeholder="Amount"
+              [(ngModel)]="form4['amount4']" #amount4="ngModel" required />
+            <div *ngIf="f4.submitted && amount4.invalid" class="text-danger txt-validation">
+              <div *ngIf="amount4.errors?.['required']">Investment Amount is required</div>
+            </div>
+          </div>
+          <div class="col-md-4 mb-3">
+            <label for="walletType4" class="form-label">Wallet Type</label>
+            <select class="form-control form-select" id="walletType4" name="walletType4" placeholder="Wallet Type"
+              [(ngModel)]="form4['walletType4']" #walletType4="ngModel" required>
+              <option value="MOM_DHAN_ACCOUNT">STOCKS</option>
+              <!-- <option value="MANUAL_LENDING">MANUAL_LENDING</option> -->
+            </select>
+            <div *ngIf="f4.submitted && walletType4.invalid" class="text-danger txt-validation">
+              <div *ngIf="walletType4.errors?.['required']">Wallet Type is required</div>
+            </div>
+          </div>
+        </div>
+        <button class="btn btn-primary">Submit</button>
+        <div *ngIf="f4.submitted && reqSubmited4" class="alert alert-danger text-danger">
+          {{errorMessage}}
+        </div>
+      </form>
+    </app-card>
+  </div>
+  <div class="col-sm-12">
+    <app-card cardTitle="Update Investment" [options]="false">
+      <form name="form5" (ngSubmit)="f5.form.valid && updateInvestment()" #f5="ngForm" novalidate>
+        <div class="row">
+          <div class="col-md-4 mb-3">
+            <label for="particulars2" class="form-label">Particulars</label>
+            <input type="text" class="form-control" id="particulars2" name="particulars2" placeholder="Particulars"
+              [(ngModel)]="form5['particulars2']" #particulars2="ngModel" required />
+            <div *ngIf="f5.submitted && particulars2.invalid" class="text-danger txt-validation">
+              <div *ngIf="particulars2.errors?.['required']">Particulars is required</div>
+            </div>
+          </div>
+          <div class="col-md-4 mb-3">
+            <label for="amount6" class="form-label">Market Value</label>
+            <input type="text" class="form-control" id="amount6" name="amount6" placeholder="Amount"
+              [(ngModel)]="form5['amount6']" #amount6="ngModel" required />
+            <div *ngIf="f5.submitted && amount6.invalid" class="text-danger txt-validation">
+              <div *ngIf="amount6.errors?.['required']">Market Value is required</div>
+            </div>
+          </div>
+          <div class="col-md-4 mb-3">
+            <label for="amount5" class="form-label">Investment Value</label>
+            <input type="text" class="form-control" id="amount5" name="amount5" placeholder="Amount"
+              [(ngModel)]="form5['amount5']" #amount5="ngModel" required />
+            <div *ngIf="f5.submitted && amount5.invalid" class="text-danger txt-validation">
+              <div *ngIf="amount5.errors?.['required']">Investment Value is required</div>
+            </div>
+          </div>
+          <div class="col-md-4 mb-3">
+            <label for="otherIncome" class="form-label">Other Income</label>
+            <input type="text" class="form-control" id="otherIncome" name="otherIncome" placeholder="Other Income"
+              [(ngModel)]="form5['otherIncome']" #otherIncome="ngModel" required />
+            <div *ngIf="f5.submitted && otherIncome.invalid" class="text-danger txt-validation">
+              <div *ngIf="otherIncome.errors?.['required']">Other Income is required</div>
+            </div>
+          </div>
+          <div class="col-md-4 mb-3">
+            <label for="soldStatus" class="form-label">Sold Status</label>
+            <select class="form-control form-select" id="soldStatus" name="soldStatus" placeholder="Sold Status"
+              [(ngModel)]="form5['soldStatus']" #soldStatus="ngModel" required>
+              <option value="SOLD">SOLD</option>
+              <option value="NOT_SOLD">NOT_SOLD</option>
+            </select>
+            <div *ngIf="f5.submitted && soldStatus.invalid" class="text-danger txt-validation">
+              <div *ngIf="soldStatus.errors?.['required']">Sold Status is required</div>
+            </div>
+          </div>
+          <div class="col-md-4 mb-3">
+            <label for="walletType5" class="form-label">Wallet Type</label>
+            <select class="form-control form-select" id="walletType5" name="walletType5" placeholder="Wallet Type"
+              [(ngModel)]="form5['walletType5']" #walletType5="ngModel" required>
+              <option value="MOM_DHAN_ACCOUNT">STOCKS</option>
+              <!-- <option value="MANUAL_LENDING">MANUAL_LENDING</option> -->
+            </select>
+            <div *ngIf="f5.submitted && walletType5.invalid" class="text-danger txt-validation">
+              <div *ngIf="walletType5.errors?.['required']">Wallet Type is required</div>
+            </div>
+          </div>
+        </div>
+        <button class="btn btn-primary">Submit</button>
+        <div *ngIf="f5.submitted && reqSubmited5" class="alert alert-danger text-danger">
+          {{errorMessage}}
+        </div>
+      </form>
+    </app-card>
+  </div>
+
+  <!-- manual lending update -->
+  <div class="col-sm-12">
+    <app-card cardTitle="Update Manual lending" [options]="false">
+      <form name="form6" (ngSubmit)="f6.form.valid && updateManualLending()" #f6="ngForm" novalidate>
+        <div class="row">
+          <div class="col-md-4 mb-3">
+            <label for="SchemeId" class="form-label">SchemeId</label>
+            <input type="text" class="form-control" id="SchemeId" name="SchemeId" placeholder="SchemeId"
+              [(ngModel)]="form6['SchemeId']" #SchemeId="ngModel" required />
+            <div *ngIf="f6.submitted && SchemeId.invalid" class="text-danger txt-validation">
+              <div *ngIf="SchemeId.errors?.['required']">SchemeId is required</div>
+            </div>
+          </div>
+          <div class="col-md-4 mb-3">
+            <label for="DPD" class="form-label">DPD</label>
+            <input type="number" class="form-control" id="DPD" name="DPD" placeholder="DPD"
+              [(ngModel)]="form6['DPD']" #DPD="ngModel" required />
+            <div *ngIf="f6.submitted && (DPD.invalid && Comments.invalid)" class="text-danger txt-validation">
+              <div *ngIf="DPD.errors?.['required']">DPD is required</div>
+            </div>
+          </div>
+          <div class="col-md-4 mb-3">
+            <label for="Comments" class="form-label">Comments</label>
+            <input type="text" class="form-control" id="Comments" name="Comments" placeholder="Comments"
+              [(ngModel)]="form6['Comments']" #Comments="ngModel" required />
+            <div *ngIf="f6.submitted && (DPD.invalid && Comments.invalid)" class="text-danger txt-validation">
+              <div *ngIf="Comments.errors?.['required']">comments is required</div>
+            </div>
+          </div>
+        </div>
+        <button class="btn btn-primary">Submit</button>
+        <div *ngIf="f6.submitted && reqSubmited6" class="alert alert-danger text-danger">
+          {{errorMessage}}
+        </div>
+      </form>
+    </app-card>
+  </div>
+</div>

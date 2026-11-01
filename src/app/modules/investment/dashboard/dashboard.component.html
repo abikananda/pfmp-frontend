@@ -1,0 +1,238 @@
+<div class="row">
+  <div class="col-sm-12">
+    <app-card cardTitle="Select Investment Type" [options]="false">
+      <div class="mb-3">
+        <select class="form-select" [(ngModel)]="selectedInvType" (ngModelChange)="onSelectionChange($event)">
+          <option *ngFor="let option of invOptions" [value]="option.value">{{ option.text }}</option>
+        </select>
+      </div>
+    </app-card>
+  </div>
+  <div class="col-sm-12">
+    <app-card cardTitle="Manual Lending Investments" [options]="false">
+      <app-inv-data-table [invType]="selectedInvType"></app-inv-data-table>
+    </app-card>
+  </div>
+  <!-- order-card start -->
+  <div class="col-md-6 col-xl-3">
+    <app-card [hidHeader]="true" cardClass="bg-c-blue order-card">
+      <h6 class="text-white">Portfolio Realised Return</h6>
+      <h2 class="text-end text-white">
+        <i class="icon-profit float-start"></i>
+        <span>{{data.realisedReturnAmt | currency: 'INR':'symbol':'1.1-2':'hi-IN'}}</span>
+      </h2>
+      <p class="m-b-0">
+        Return On Investment
+        <span class="float-end">{{data.realisedReturnPer/100 | percent: '1.1-2'}}</span>
+      </p>
+    </app-card>
+  </div>
+  <div class="col-md-6 col-xl-3">
+    <app-card [hidHeader]="true" cardClass="bg-c-green order-card">
+      <h6 class="text-white">Total Fund Invested</h6>
+      <h2 class="text-end text-white">
+        <i class="icon-investment float-start"></i>
+        <span>{{data.totalFundInvested | currency: 'INR':'symbol':'1.1-2':'hi-IN'}}</span>
+      </h2>
+      <p class="m-b-0">
+        Principal Amount
+        <span class="float-end">{{data.amountLoadedToWallet | currency: 'INR':'symbol':'1.1-2':'hi-IN'}}</span>
+      </p>
+    </app-card>
+  </div>
+  <div class="col-md-6 col-xl-3" *ngIf='selectedInvType!=="MANUAL_LENDING"'>
+    <app-card [hidHeader]="true" cardClass="bg-c-yellow order-card">
+      <h6 class="text-white">Total Fund in Wallet</h6>
+      <h2 class="text-end text-white">
+        <i class="icon-wallet float-start"></i>
+        <span>{{data.totalFundInWallet | currency: 'INR':'symbol':'1.1-2':'hi-IN'}}</span>
+      </h2>
+      <p class="m-b-0">
+        This Month
+        <span class="float-end">$5,032</span>
+      </p>
+    </app-card>
+  </div>
+  <div class="col-md-6 col-xl-3" *ngIf='selectedInvType!=="MANUAL_LENDING"'>
+    <app-card [hidHeader]="true" cardClass="bg-c-red order-card">
+      <h6 class="text-white">Actual Amount in Wallet</h6>
+      <h2 class="text-end text-white">
+        <i class="icon-bank float-start"></i>
+        <span>{{data.actualAmountInWallet | currency: 'INR':'symbol':'1.1-2':'hi-IN'}}</span>
+      </h2>
+      <p class="m-b-0">
+        This Month
+        <span class="float-end">$542</span>
+      </p>
+    </app-card>
+  </div>
+  <div class="col-md-6 col-xl-3" *ngIf='selectedInvType==="MANUAL_LENDING"'>
+    <app-card [hidHeader]="true" cardClass="bg-c-green order-card">
+      <h6 class="text-white">Amount Yet to Invest</h6>
+      <h2 class="text-end text-white">
+        <i class="icon-bank float-start"></i>
+        <span>{{data.balanceAmountInBank | currency: 'INR':'symbol':'1.1-2':'hi-IN'}}</span>
+      </h2>
+      <p class="m-b-0">
+        Active Loans
+        <span class="float-end">{{data.numberOfActiveLoans}} out of {{data.totalNumberOfLoans}}</span>
+      </p>
+    </app-card>
+  </div>
+  <div class="col-md-6 col-xl-3" *ngIf='selectedInvType!=="MANUAL_LENDING"'>
+    <app-card [hidHeader]="true" cardClass="bg-c-red order-card">
+      <h6 class="text-white">Charges</h6>
+      <h2 class="text-end text-white">
+        <i class="icon-bank float-start"></i>
+        <span>{{data.charges | number}}</span>
+      </h2>
+      <p class="m-b-0">
+        This Month
+        <span class="float-end">$542</span>
+      </p>
+    </app-card>
+  </div>
+  <div class="col-md-6 col-xl-3" *ngIf='selectedInvType!=="MANUAL_LENDING"'>
+    <app-card [hidHeader]="true" cardClass="bg-c-purple order-card">
+      <h6 class="text-white">Amount Loaded to Wallet</h6>
+      <h2 class="text-end text-white">
+        <i class="icon-bank float-start"></i>
+        <span>{{data.amountLoadedToWallet | currency: 'INR':'symbol':'1.1-2':'hi-IN'}}</span>
+      </h2>
+      <p class="m-b-0">
+        This Month
+        <span class="float-end">$542</span>
+      </p>
+    </app-card>
+  </div>
+  <div class="col-md-6 col-xl-3" *ngIf='selectedInvType==="MANUAL_LENDING"'>
+    <app-card [hidHeader]="true" cardClass="bg-c-yellow order-card">
+      <h6 class="text-white">Number of NPA's</h6>
+      <h2 class="text-end text-white">
+        <i class="icon-bank float-start"></i>
+        <span>{{data.actualAmountInWallet | number}}/{{data.totalFundInWallet | number}}</span>
+      </h2>
+      <p class="m-b-0">
+        Principal Loss
+        <span class="float-end">{{data.charges | currency: 'INR':'symbol':'1.1-2':'hi-IN'}}({{(data.charges*100/data.amountLoadedToWallet)/100 | percent: '1.1-2'}})</span>
+      </p>
+    </app-card>
+  </div>
+  <!-- order-card end -->
+</div>
+<div class="row">
+  <div class="col-md-6">
+    <app-card cardTitle="Loan Count Summary" [options]="false">
+      <div style="display: flex; justify-content: center; margin-top: 30px;">
+        <ngx-charts-bar-vertical
+          [view]="view"
+          [scheme]="colorScheme"
+          [results]="loanSummary"
+          [gradient]="false"
+          [xAxis]="true"
+          [yAxis]="true"
+          [legend]="false"
+          [showXAxisLabel]="true"
+          [showYAxisLabel]="true"
+          [xAxisLabel]="'Loan Status'"
+          [yAxisLabel]="'Number of Loans'"
+          (select)="onSelect($event)">
+        </ngx-charts-bar-vertical>
+      </div>
+    </app-card>
+  </div>
+  <div class="col-md-6">
+    <app-card cardTitle="Investment Summary" [options]="false">
+      <div style="display: flex; justify-content: center; margin-top: 30px;">
+        <ngx-charts-bar-vertical
+          [view]="view"
+          [scheme]="colorScheme"
+          [results]="investmentSummary"
+          [gradient]="false"
+          [xAxis]="true"
+          [yAxis]="true"
+          [legend]="false"
+          [showXAxisLabel]="true"
+          [showYAxisLabel]="true"
+          [xAxisLabel]="'Loan Status'"
+          [yAxisLabel]="'Investment Amount'"
+          (select)="onSelect($event)">
+        </ngx-charts-bar-vertical>
+      </div>
+    </app-card>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <app-card cardTitle="{{showMonthly?'Monthly':'Day Wise'}} Loan Count Summary" [options]="false">
+      <div style="display: flex; justify-content: center; margin-top: 20px;">
+        <ngx-charts-line-chart
+          [view]="a_view"
+          [scheme]="a_colorScheme"
+          [results]="monthlyLoanSummary"
+          [legend]="true"
+          [xAxis]="true"
+          [yAxis]="true"
+          [showXAxisLabel]="true"
+          [showYAxisLabel]="true"
+          [xAxisLabel]="'Month'"
+          [yAxisLabel]="'Number of Loans'"
+          [autoScale]="true"
+          [animations]="true"
+          [roundDomains]="true"
+          (select)="a_onSelect($event)">
+        </ngx-charts-line-chart>
+      </div>
+      <div class="d-flex align-items-center flex-nowrap">
+        <div class="form-check form-switch mb-3">
+            <input class="form-check-input"
+                   type="checkbox"
+                   id="statusToggle"
+                   name="statusToggle"
+                   [(ngModel)]="showMonthly"
+                   (change)="changeStats()" />
+            <label class="form-check-label" for="statusToggle">
+              Show {{showMonthly?'Monthly':'Day Wise'}}
+            </label>
+          </div>
+    </div>     
+  </app-card>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <app-card cardTitle="{{showMonthly?'Monthly':'Day Wise'}} Investment Summary" [options]="false">
+      <div style="display: flex; justify-content: center; margin-top: 20px;">
+        <ngx-charts-line-chart
+          [view]="a_view"
+          [scheme]="a_colorScheme"
+          [results]="monthlyInvestmentSummary"
+          [legend]="true"
+          [xAxis]="true"
+          [yAxis]="true"
+          [showXAxisLabel]="true"
+          [showYAxisLabel]="true"
+          [xAxisLabel]="'Month'"
+          [yAxisLabel]="'Investment Amount'"
+          [autoScale]="true"
+          [animations]="true"
+          [roundDomains]="true"
+          (select)="a_onSelect($event)">
+        </ngx-charts-line-chart>
+      </div>
+      <div class="d-flex align-items-center flex-nowrap">
+        <div class="form-check form-switch mb-3">
+            <input class="form-check-input"
+                   type="checkbox"
+                   id="statusToggle"
+                   name="statusToggle"
+                   [(ngModel)]="showMonthly"
+                   (change)="changeStats()" />
+            <label class="form-check-label" for="statusToggle">
+              Show {{showMonthly?'Monthly':'Day Wise'}}
+            </label>
+          </div>
+    </div>    
+  </app-card>
+  </div>
+</div>

@@ -1,0 +1,6 @@
+<li class="sidebar-group nav-list">
+  <div class="sidebar-group-label"><i [class]="item.icon"></i>{{ item.title }}</div>
+  <ul class="nav-list">
+    <app-nav-item *ngFor="let child of item.children" [item]="child"></app-nav-item>
+  </ul>
+</li>

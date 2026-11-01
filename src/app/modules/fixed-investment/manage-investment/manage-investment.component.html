@@ -1,0 +1,160 @@
+<div class="row">
+  <div class="col-sm-12">
+    <app-card cardTitle="Select Investment Type" [options]="false">
+      <div class="mb-3">
+        <label for="exampleSelect" class="form-label">Investment Type</label>
+        <select class="form-select" id="exampleSelect" [(ngModel)]="selectedInvType">
+          <option [value]="null">Choose Investment Type</option>
+          <option *ngFor="let option of invOptions" [value]="option.value">{{ option.text }}</option>
+        </select>
+      </div>
+    </app-card>
+  </div>
+  <div class="col-sm-12">
+    <app-card cardTitle="Add Investment" [options]="false">
+      <form name="addInvestmentForm" (ngSubmit)="f.form.valid && addInvestment()" #f="ngForm" novalidate>
+        <div class="row">
+          <div class="col-md-4 mb-3">
+            <label for="particulars" class="form-label">Particulars</label>
+            <ng-select 
+              [items]="items"
+              bindLabel="particular"
+              id="particulars"
+              name="particulars"
+              bindValue="particular"
+              [typeahead]="search$"
+              [addTag]="true"
+              [(ngModel)]="addInvestmentForm['particulars']"
+              #particulars="ngModel"
+              placeholder="Search or add..." required>
+            </ng-select>
+            <div *ngIf="f.submitted && particulars.invalid" class="text-danger txt-validation">
+              <div *ngIf="particulars.errors?.['required']">Particulars is required</div>
+            </div>
+          </div>
+          <div class="col-md-4 mb-3">
+            <label for="investmentAmount" class="form-label">Investment Amount</label>
+            <div class="input-group">
+              <span class="input-group-text" id="investmentAmountPrepend">&#8377;</span>
+              <input type="number" class="form-control" id="investmentAmount" name="investmentAmount"
+                placeholder="Investment Amount" aria-describedby="investmentAmountPrepend"
+                [(ngModel)]="addInvestmentForm['investmentAmount']" #investmentAmount="ngModel" required />
+            </div>
+            <div *ngIf="f.submitted && investmentAmount.invalid" class="text-danger txt-validation">
+              <div *ngIf="investmentAmount.errors?.['required']">Investment Amount is required</div>
+            </div>
+          </div>
+          <div class="col-md-4 mb-3">
+            <label for="annualInterest" class="form-label">Annual Interest</label>
+            <div class="input-group">
+              <span class="input-group-text" id="annualInterestPrepend">&percnt;</span>
+              <input type="number" class="form-control" id="annualInterest" name="annualInterest"
+                placeholder="Annual Interest" aria-describedby="annualInterestPrepend"
+                [(ngModel)]="addInvestmentForm['annualInterest']" #annualInterest="ngModel" required />
+            </div>
+            <div *ngIf="f.submitted && annualInterest.invalid" class="text-danger txt-validation">
+              <div *ngIf="annualInterest.errors?.['required']">Annual Interest is required</div>
+            </div>
+          </div>
+        </div>
+        <button class="btn btn-primary">Submit</button>
+        <div *ngIf="f.submitted && requestSubmitted" class="alert alert-danger text-danger">
+          {{errorMessage}}
+        </div>
+      </form>
+    </app-card>
+  </div>
+
+  <div class="col-sm-12">
+    <app-card cardTitle="Update Investment" [options]="false">
+      <form name="updateInvestmentForm" (ngSubmit)="f1.form.valid && updateInvestment()" #f1="ngForm" novalidate>
+        <div class="row">
+          <div class="col-md-4 mb-3">
+            <label for="particulars2" class="form-label">Particulars</label>
+            <ng-select 
+              [items]="items"
+              bindLabel="particular"
+              id="particulars2"
+              name="particulars2"
+              bindValue="particular"
+              [typeahead]="search$"
+              [addTag]="false"
+              [(ngModel)]="updateInvestmentForm['particulars2']"
+              #particulars2="ngModel"
+              placeholder="Search..." required>
+            </ng-select>
+            <div *ngIf="f1.submitted && particulars2.invalid" class="text-danger txt-validation">
+              <div *ngIf="particulars2.errors?.['required']">Particulars is required</div>
+            </div>
+          </div>
+          <div class="col-md-4 mb-3">
+            <label for="investmentStatus" class="form-label">Investment Status</label>
+            <select class="form-control form-select" id="investmentStatus" name="investmentStatus"
+              placeholder="Investment Status" [(ngModel)]="updateInvestmentForm['investmentStatus']"
+              #investmentStatus="ngModel" required>
+              <option value="ACTIVE">ACTIVE</option>
+              <option value="IN_ACTIVE">IN_ACTIVE</option>
+            </select>
+            <div *ngIf="f1.submitted && investmentStatus.invalid" class="text-danger txt-validation">
+              <div *ngIf="investmentStatus.errors?.['required']">Investment Status is required</div>
+            </div>
+          </div>
+
+          <div class="col-md-4 mb-3">
+            <label for="investmentAmount2" class="form-label">Investment Amount</label>
+            <div class="input-group">
+              <span class="input-group-text" id="investmentAmount2Prepend">&#8377;</span>
+              <input type="number" class="form-control" id="investmentAmount2" name="investmentAmount2"
+                placeholder="Investment Amount" aria-describedby="investmentAmount2Prepend"
+                [(ngModel)]="updateInvestmentForm['investmentAmount2']" #investmentAmount2="ngModel" />
+            </div>
+          </div>
+
+          <div class="col-md-4 mb-3">
+            <label for="annualInterest2" class="form-label">Annual Interest</label>
+            <div class="input-group">
+              <span class="input-group-text" id="annualInterest2Prepend">&percnt;</span>
+              <input type="number" class="form-control" id="annualInterest2" name="annualInterest2"
+                placeholder="Annual Interest" aria-describedby="annualInterest2Prepend"
+                [(ngModel)]="updateInvestmentForm['annualInterest2']" #annualInterest2="ngModel" />
+            </div>
+          </div>
+          <div class="col-md-4 mb-3">
+            <label for="comments" class="form-label">Comments</label>
+            <input type="text" class="form-control" id="comments" name="comments" placeholder="comments"
+              [(ngModel)]="updateInvestmentForm['comments']" #comments="ngModel" />
+          </div>
+          <div class="col-md-4 mb-3">
+            <label for="otherIncome" class="form-label">Other Income</label>
+            <div class="input-group">
+              <span class="input-group-text" id="otherIncomePrepend">&#8377;</span>
+              <input type="number" class="form-control" id="otherIncome" name="otherIncome" placeholder="Other Income"
+                aria-describedby="otherIncomePrepend" [(ngModel)]="updateInvestmentForm['otherIncome']"
+                #otherIncome="ngModel" />
+            </div>
+          </div>
+          <div class="col-md-4 mb-3">
+            <label for="maturityDate" class="form-label">Maturity Date</label>
+            <div class="input-group">
+              <input class="form-control" id="maturityDate" name="maturityDate" placeholder="yyyy-mm-dd" name="dp"
+                [(ngModel)]="updateInvestmentForm['maturityDate']" ngbDatepicker #d="ngbDatepicker"
+                #maturityDate="ngModel" />
+                <button
+                class="btn btn-outline-secondary"
+                (click)="d.toggle()"
+                type="button"
+                aria-label="Open calendar">
+                <i class="bi bi-calendar3"></i>
+              </button>
+              
+            </div>
+          </div>
+        </div>
+        <button class="btn btn-primary">Submit</button>
+        <div *ngIf="f1.submitted && requestSubmitted2" class="alert alert-danger text-danger">
+          {{errorMessage}}
+        </div>
+      </form>
+    </app-card>
+  </div>
+</div>

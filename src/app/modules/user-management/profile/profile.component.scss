@@ -1,0 +1,34 @@
+.container {
+  max-width: 500px;
+}
+
+.profile-pic {
+  display: inline-block;
+  cursor: pointer;
+  position: relative;
+}
+
+.profile-img {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border: 3px solid #007bff;
+}
+
+.initials-avatar {
+  width: 120px;
+  height: 120px;
+  background-color: #007bff;
+  color: white;
+  font-size: 36px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  border: 3px solid #007bff;
+}
+
+.card {
+  border-radius: 15px;
+}

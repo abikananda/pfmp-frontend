@@ -1,0 +1,42 @@
+<div class="row">
+  <div class="col-md-6 mb-3">
+    <div class="input-group">
+      <input type="file" (change)="selectFile($event)" class="form-control" id="inputGroupFile03"
+        aria-describedby="inputGroupFileAddon03" aria-label="Upload" />
+      <button class="btn btn-primary" id="inputGroupFileAddon03" type="button" 
+        [disabled]="!selectedFiles || uploadStatus === 'uploading' || uploadStatus === 'processing'" (click)="upload()">
+        Upload
+      </button>
+    </div>
+
+    <button *ngIf="selectedFiles" type="button" class="btn btn-secondary btn-sm mt-2" (click)="clearSelection()">
+      Clear Selection
+    </button>
+
+    <div *ngIf="selectedFileSize !== null" class="mt-2">
+      <div><strong>File name:</strong> {{ selectedFileName }}</div>
+      <div><strong>File size:</strong> {{ selectedFileSize / 1024 | number: '1.0-2' }} KB</div>
+      <div><strong>Last modified:</strong> {{ selectedFileModified | date:'medium' }}</div>
+    </div>
+
+    <div *ngIf="uploadStatus === 'uploading' || uploadStatus === 'processing'" class="progress my-3" style="height: 25px;">
+      <div class="progress-bar progress-bar-striped progress-bar-animated bg-success" role="progressbar"
+        [attr.aria-valuenow]="progress" aria-valuemin="0" aria-valuemax="100" [style.width.%]="progress">
+        {{ progress }}%
+      </div>
+    </div>
+
+    <div *ngIf="uploadStatus === 'processing'" class="mt-2 alert alert-info d-flex align-items-center">
+      <div class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></div>
+      Processing file, please wait...
+    </div>    
+
+    <div *ngIf="uploadStatus === 'success'" class="mt-2 alert alert-success">
+      {{ message }}
+    </div>
+
+    <div *ngIf="uploadStatus === 'error'" class="mt-2 alert alert-danger">
+      {{ message }}
+    </div>
+  </div>
+</div>

@@ -1,0 +1,8 @@
+<nav class="sidebar">
+   <ng-container *ngFor="let group of navigations">
+    <app-nav-group [item]="group" *ngIf="isFeatureEnabled(group.featureName)"></app-nav-group>
+  </ng-container>
+</nav>
+<div class="version">
+  <span disabled class="pe-auto">v{{ appVersion }}</span>
+</div>

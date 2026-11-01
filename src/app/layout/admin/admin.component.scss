@@ -1,0 +1,84 @@
+.layout {
+    display: flex;
+    min-height: 100vh;
+  }
+  
+  /* Sidebar */
+  pcoded-navbar.menupos-fixed {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    width: 220px; /* Keep consistent with your sidebar width */
+    background-color: #fff; /* White background */
+    border-right: 1px solid #e5e7eb;
+    box-shadow: 2px 0 8px rgba(0, 0, 0, 0.03);
+    z-index: 1020; /* So header and overlays stack properly */
+    overflow-y: auto;
+  }
+  
+  /* When collapsed */
+  .navbar-collapsed {
+    width: 60px !important; /* Customize as you want */
+  }
+  
+  /* Main container takes remaining space */
+  .main-container {
+    margin-left: 220px; /* Same as sidebar width */
+    width: calc(100% - 220px);
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background-color: #f8fafc; /* Light page background */
+    transition: margin-left 0.3s ease;
+  }
+  
+  /* Adjust margin if navbar collapsed */
+  .navbar-collapsed + .main-container {
+    margin-left: 60px;
+    width: calc(100% - 60px);
+  }
+  
+  /* Header */
+  .pcoded-header {
+    position: fixed;
+    top: 0;
+    // left: 220px; /* Same as sidebar */
+    right: 0;
+    height: 50px;
+    background-color: #3b82f6; /* Your header blue */
+    color: white;
+    display: flex;
+    align-items: center;
+    padding: 0 1rem;
+    z-index: 1100;
+    transition: left 0.3s ease;
+  }
+  
+  /* Header adjusts for collapsed sidebar */
+  .navbar-collapsed + .main-container .pcoded-header {
+    left: 60px;
+  }
+  
+  /* Content below header */
+  .page-wrapper {
+    margin-top: 50px; /* Header height */
+    padding: 1.5rem;
+    flex-grow: 1;
+    overflow-y: auto;
+  }
+  
+  /* Mobile overlay */
+  .pc-menu-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.3);
+    z-index: 1050;
+  }
+  
+  /* Show overlay when mobile menu is open (add class via your component) */
+  .mob-open ~ .pc-menu-overlay {
+    display: block;
+  }
+
+  

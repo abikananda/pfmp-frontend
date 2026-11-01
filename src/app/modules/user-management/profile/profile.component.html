@@ -1,0 +1,40 @@
+<div class="container mt-5">
+    <div class="card shadow-lg p-4">
+        <!-- Profile Avatar -->
+        <div class="text-center">
+            <label for="fileInput" class="profile-pic">
+                <input type="file" id="fileInput" hidden (change)="onFileSelected($event)" />
+                <div *ngIf="user.profileImage; else initialsAvatar">
+                    <img [src]="user.profileImage" class="rounded-circle img-fluid profile-img" alt="Profile Image">
+                </div>
+                <ng-template #initialsAvatar>
+                    <div class="initials-avatar">
+                        {{ getInitials() }}
+                    </div>
+                </ng-template>
+            </label>
+        </div>
+
+        <!-- Profile Details -->
+        <div class="text-center mt-3">
+            <h3>{{ user.fullName }}</h3>
+            <p class="text-muted">{{ user.email }}</p>
+        </div>
+
+        <!-- Editable Fields -->
+        <div class="mt-4">
+            <h5>Edit Profile</h5>
+            <div class="mb-2">
+                <label class="form-label" for="fullName">Full Name</label>
+                <input type="text" [(ngModel)]="user.fullName" id="fullName" class="form-control" (input)="checkChanges()" />
+            </div>
+            <div class="mb-2">
+                <label class="form-label" for="email">Email</label>
+                <input type="email" [(ngModel)]="user.email" class="form-control" id="email" (input)="checkChanges()" />
+            </div>
+
+            <!-- Save Changes Button -->
+            <button class="btn btn-primary" [disabled]="!hasChanges" (click)="saveProfile()">Save Changes</button>
+        </div>
+    </div>
+</div>

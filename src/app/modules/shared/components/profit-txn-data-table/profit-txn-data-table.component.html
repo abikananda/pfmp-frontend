@@ -1,0 +1,66 @@
+<form>
+    <div class="mb-3 d-flex flex-nowrap justify-content-between align-items-center" style="white-space: nowrap;">
+        <!-- Left side: Search -->
+        <div class="d-flex align-items-center flex-grow-1 me-3">
+            <label for="table-complete-search" class="me-2 col-form-label">Search:</label>
+            <input id="table-complete-search" type="text" class="form-control me-2 w-auto" 
+                name="searchTerm" placeholder="Search" [(ngModel)]="service.searchTerm" style="min-width: 200px;" />
+            <span *ngIf="service.loading$ | async" class="col-form-label">Loading...</span>
+        </div>
+    
+        <!-- Right side: Filters -->
+        <div class="d-flex align-items-center flex-nowrap">
+            <label for="category" class="me-2 col-form-label">Filter By:</label>
+            <select class="form-control form-select me-2 w-auto" id="category" name="depositType1" (change)="onCategoryChange($event)" style="min-width: 160px;">
+                <option value="" selected disabled>Choose...</option>
+                <option *ngFor="let key of categoryKeys" [value]="key">{{ key }}</option>
+            </select>
+            <select class="form-control form-select w-auto" id="options" name="depositType2" [(ngModel)]="service.searchTerm" style="min-width: 160px;">
+                <option value="" selected disabled>Choose...</option>
+                <option *ngFor="let option of options">{{ option }}</option>
+            </select>
+        </div>
+    </div> 
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col" class="fixed-col" appSortable [column]="'particular'" (sort)="onSort($event)">Particulars</th>
+                <th scope="col" appSortable [column]="'gainAmt'" (sort)="onSort($event)">gainAmt</th>
+                <th scope="col" appSortable [column]="'financialYear'" (sort)="onSort($event)">financialYear</th>
+                <th scope="col" appSortable [column]="'status'" (sort)="onSort($event)">status</th>
+                <th scope="col" appSortable [column]="'lastUpdated'" (sort)="onSort($event)">lastUpdated</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (country of countries$ | async; track country.id) {
+            <tr>
+                <th scope="row">{{ country.id }}</th>
+                <td class="fixed-col"><ngb-highlight [result]="country.particular" [term]="service.searchTerm" /></td>
+                <td><ngb-highlight [result]="country.gainAmt | currency: 'INR':'symbol':'1.1-2':'hi-IN'" [term]="service.searchTerm" /></td>
+                <td><ngb-highlight [result]="country.financialYear" [term]="service.searchTerm" /></td>
+                <!-- divide by 100 because percent pipe multiply value with 100 by default -->
+                <td><ngb-highlight [result]="country.status" [term]="service.searchTerm" /></td>
+                <td><ngb-highlight [result]="country.lastUpdated | date: 'd/M/y'" [term]="service.searchTerm" /></td>
+            </tr>
+            } @empty {
+            <tr>
+                <td colspan="6" style="text-align: center">No countries found</td>
+            </tr>
+            }
+        </tbody>
+    </table>
+
+    <div class="d-flex justify-content-between p-2">
+        <ngb-pagination [collectionSize]="(total$ | async)!" [(page)]="service.page" [pageSize]="service.pageSize"
+            [boundaryLinks]="true" [maxSize]="20">
+        </ngb-pagination>
+
+        <select class="form-select" style="width: auto" name="pageSize" [(ngModel)]="service.pageSize">
+            <option [ngValue]="10">10</option>
+            <option [ngValue]="20">20</option>
+            <option [ngValue]="50">50</option>
+            <option [ngValue]="100">100</option>
+        </select>
+    </div>
+</form>

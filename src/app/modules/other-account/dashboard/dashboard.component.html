@@ -1,0 +1,59 @@
+<div class="row">
+  <div class="col-sm-12">
+    <app-card cardTitle="Account Tracking" [options]="false">
+      <app-profit-txn-data-table></app-profit-txn-data-table>
+    </app-card>
+  </div>
+  <div class="col-md-6 col-xl-3">
+    <app-card [hidHeader]="true" cardClass="bg-c-blue order-card">
+      <h6 class="text-white">Total Return Amount </h6>
+      <h2 class="text-end text-white">
+        <i class="icon-profit float-start"></i>
+        <span>{{data.totalReturnAmount | currency: 'INR':'symbol':'1.1-2':'hi-IN'}}</span>
+      </h2>
+      <p class="m-b-0">
+        Total Return Percent
+        <span class="float-end">{{data.totalReturnPer/100 | percent: '1.1-3'}}</span>
+      </p>
+    </app-card>
+  </div>
+  <div class="col-md-6 col-xl-3">
+    <app-card [hidHeader]="true" cardClass="bg-c-green order-card">
+      <h6 class="text-white">Current Account Balance</h6>
+      <h2 class="text-end text-white">
+        <i class="icon-investment float-start"></i>
+        <span>{{data.currentAccBalance | currency: 'INR':'symbol':'1.1-1':'hi-IN'}}</span>
+      </h2>
+      <p class="m-b-0">
+        Amt Transfer To Acc
+        <span class="float-end">{{data.totAmtTransferToAcc | currency: 'INR':'symbol':'1.1-2':'hi-IN'}}</span>
+      </p>
+    </app-card>
+  </div>
+  <div class="col-md-6 col-xl-3">
+    <app-card [hidHeader]="true" cardClass="bg-c-green order-card">
+      <h6 class="text-white">Current FY Principal Amt</h6>
+      <h2 class="text-end text-white">
+        <i class="icon-bank float-start"></i>
+        <span>{{data.currentFYPrincipalAmt | currency: 'INR':'symbol':'1.1-1':'hi-IN'}}</span>
+      </h2>
+      <p class="m-b-0">
+        Current FY Return
+        <span class="float-end">{{data.currentFYReturnPer/100 | percent: '1.1-3'}}/{{data.currentFYUnrealisedReturnPer/100 | percent: '1.1-3'}}</span>
+      </p>
+    </app-card>
+  </div>
+  <div class="col-md-6 col-xl-3">
+    <app-card [hidHeader]="true" cardClass="bg-c-yellow order-card">
+      <h6 class="text-white">Current FY Return Amount</h6>
+      <h2 class="text-end text-white">
+        <i class="icon-bank float-start"></i>
+        <span>{{data.currentFYReturnAmount | currency: 'INR':'symbol':'1.1-2':'hi-IN'}}</span>
+      </h2>
+      <p class="m-b-0">
+        Unrealized Amount
+        <span class="float-end">{{data.currentFYUnrealisedReturnAmount-data.currentFYReturnAmount | currency: 'INR':'symbol':'1.1-2':'hi-IN'}}</span>
+      </p>
+    </app-card>
+  </div>
+</div>

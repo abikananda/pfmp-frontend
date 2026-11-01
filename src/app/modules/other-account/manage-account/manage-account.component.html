@@ -1,0 +1,101 @@
+<div class="row">
+  <div class="col-sm-12">
+    <app-card cardTitle="Deposit/Withdraw Amount To Other Bank" [options]="false">
+      <form name="addToOtherBank" (ngSubmit)="f.form.valid && transferAmtToOtherBank()" #f="ngForm" novalidate>
+        <div class="row">
+          <div class="col-md-4 mb-3">
+            <label for="amount" class="form-label">Amount</label>
+            <input type="text" class="form-control" id="amount" name="amount" placeholder="Amount"
+              [(ngModel)]="addToOtherBank['amount']" #amount="ngModel" required />
+            <div *ngIf="f.submitted && amount.invalid" class="text-danger txt-validation">
+              <div *ngIf="amount.errors?.['required']">Amount is required</div>
+            </div>
+          </div>
+          <div class="col-md-4 mb-3">
+            <label for="comment" class="form-label">Comments</label>
+            <input type="text" class="form-control" id="comment" name="comment" placeholder="Comments"
+              [(ngModel)]="addToOtherBank['comment']" #comment="ngModel" required />
+            <div *ngIf="f.submitted && comment.invalid" class="text-danger txt-validation">
+              <div *ngIf="comment.errors?.['required']">Comments is required</div>
+            </div>
+          </div>
+          <div class="col-md-4 mb-3">
+            <label for="depositType" class="form-label">Deposit Type</label>
+            <select class="form-control form-select" id="depositType" name="depositType" placeholder="Wallet Type"
+              [(ngModel)]="addToOtherBank['depositType']" #depositType="ngModel" required>
+              <option value="Deposit">Deposit</option>
+              <option value="Withdraw">Withdraw</option>
+            </select>
+            <div *ngIf="f.submitted && depositType.invalid" class="text-danger txt-validation">
+              <div *ngIf="depositType.errors?.['required']">Deposit Type is required</div>
+            </div>
+          </div>
+        </div>
+        <button class="btn btn-primary">Submit</button>
+        <div *ngIf="f.submitted && reqSubmited3" class="alert alert-danger text-danger">
+          {{errorMessage}}
+        </div>
+      </form>
+    </app-card>
+  </div>
+  <div class="col-sm-12">
+    <app-card cardTitle="Add/Update Gain Transaction" [options]="false">
+      <form name="addGainTxn" (ngSubmit)="f4.form.valid && addUpdateGainTxn()" #f4="ngForm" novalidate>
+        <div class="row">
+          <div class="col-md-4 mb-3">
+            <label for="particulars" class="form-label">Particulars</label>
+            <input type="text" class="form-control" id="particulars" name="particulars" placeholder="Particulars"
+              [(ngModel)]="addGainTxn['particulars']" #particulars="ngModel" required />
+            <div *ngIf="f4.submitted && particulars.invalid" class="text-danger txt-validation">
+              <div *ngIf="particulars.errors?.['required']">Particulars is required</div>
+            </div>
+          </div>
+          <div class="col-md-4 mb-3">
+            <label for="gainAmount" class="form-label">Gain Amount</label>
+            <input type="text" class="form-control" id="gainAmount" name="gainAmount" placeholder="Amount"
+              [(ngModel)]="addGainTxn['gainAmount']" #gainAmount="ngModel" required />
+            <div *ngIf="f4.submitted && gainAmount.invalid" class="text-danger txt-validation">
+              <div *ngIf="gainAmount.errors?.['required']">Gain Amount is required</div>
+            </div>
+          </div>
+          <div class="col-md-4 mb-3">
+            <label for="financialYear" class="form-label">Financial Year</label>
+            <select class="form-control form-select" id="financialYear" name="financialYear" placeholder="Wallet Type"
+              [(ngModel)]="addGainTxn['financialYear']" #financialYear="ngModel" required>
+              <option *ngFor="let year of financialYears" [value]="year">{{ year }}</option>
+            </select>
+            <div *ngIf="f4.submitted && financialYear.invalid" class="text-danger txt-validation">
+              <div *ngIf="financialYear.errors?.['required']">Financial Year is required</div>
+            </div>
+          </div>
+          <div class="col-md-4 mb-3">
+            <label for="status" class="form-label">Status</label>
+            <select class="form-control form-select" id="status" name="status" placeholder="Wallet Type"
+              [(ngModel)]="addGainTxn['status']" #status="ngModel" required>
+              <option value="IN_PROGRESS">IN_PROGRESS</option>
+              <option value="COMPLETED">COMPLETED</option>
+            </select>
+            <div *ngIf="f4.submitted && status.invalid" class="text-danger txt-validation">
+              <div *ngIf="status.errors?.['required']">Status is required</div>
+            </div>
+          </div>
+        </div>
+        <button class="btn btn-primary">Submit</button>
+        <div *ngIf="f4.submitted && reqSubmited4" class="alert alert-danger text-danger">
+          {{errorMessage}}
+        </div>
+      </form>
+    </app-card>
+  </div>
+
+  <div class="col-sm-12">
+    <app-card cardTitle="Reset Current Principal Amount" [options]="false">
+      <form name="resetPrincipal" (ngSubmit)="f5.form.valid && resetCurrentFYPrincipalAmt()" #f5="ngForm" novalidate>
+        <button class="btn btn-primary">Submit</button>
+        <div *ngIf="f5.submitted && reqSubmited5" class="alert alert-danger text-danger">
+          {{errorMessage}}
+        </div>
+      </form>
+    </app-card>
+  </div>
+</div>
